@@ -1,0 +1,30 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 128MB
+      max-request-size: 128MB
+  datasource:
+    url: jdbc:postgresql://localhost:5432/scroll_book
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+        ddl-auto: create
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/scroll_mongo_files
+
+application:
+  security:
+    jwt:
+      secret-key: 426f6f6b5363726f6c6c4973436f6f6c4b617274697368616e
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
