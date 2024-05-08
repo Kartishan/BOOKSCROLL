@@ -1,0 +1,7 @@
+rootProject.name = 'book-scroll'
+includeBuild 'eureka-server'
+includeBuild 'eureka-client'
+includeBuild 'eureka-gateway'
+includeBuild 'auth-service'
+includeBuild('book-service')
+includeBuild('view-history')

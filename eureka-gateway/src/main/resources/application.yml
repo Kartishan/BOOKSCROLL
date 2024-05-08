@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: eureka-gateway
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/auth/**
+            - Method=POST
+        - id: book-service
+          uri: lb://book-service
+          predicates:
+            - Path=/api/books/**
+            - Method=GET
+
+server:
+  port: 8765
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+logging:
+  pattern:
+    console: '%c{1.} [%-5level] %d{HH:mm:ss.SSS} - %msg%n'
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000
