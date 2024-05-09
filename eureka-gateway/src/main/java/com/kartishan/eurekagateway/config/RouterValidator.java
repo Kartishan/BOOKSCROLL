@@ -9,13 +9,11 @@ import java.util.function.Predicate;
 @Component
 public class RouterValidator {
 
-    // Список путей, которые не требуют JWT аутентификации
     public static final List<String> openApiEndpoints = List.of(
             "/api/auth/**",
             "/api/book/**"
     );
 
-    // Предикат, который определяет, требует ли путь аутентификации
     public Predicate<ServerHttpRequest> isSecured =
             request -> openApiEndpoints.stream()
                     .noneMatch(uri -> request.getURI().getPath().matches(uri.replace("**", ".*")));

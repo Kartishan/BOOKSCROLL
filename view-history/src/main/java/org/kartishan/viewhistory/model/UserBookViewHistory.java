@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -15,13 +16,13 @@ import java.util.Date;
 public class UserBookViewHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private UUID id;
 
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    private UUID userId;
 
     @Column(name = "book_id", nullable = false)
-    private Long bookId;
+    private UUID bookId;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "view_time", nullable = false)

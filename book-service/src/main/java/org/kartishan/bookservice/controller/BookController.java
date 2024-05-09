@@ -11,9 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/book")
 @RequiredArgsConstructor
@@ -22,7 +22,17 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BookDTO> getBookByIdWithCategory(@PathVariable UUID id, HttpServletRequest request) {
-        BookDTO bookWithCategory = bookService.getBookByIdWithCategory(id);
+        String userIdString = request.getHeader("userId");
+        UUID userId = null;
+        if (userIdString != null && !userIdString.isEmpty()) {
+            try {
+                userId = UUID.fromString(userIdString);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid UUID string: " + userIdString);
+            }
+        }
+
+        BookDTO bookWithCategory = bookService.getBookByIdWithCategory(id, userId);
         return ResponseEntity.ok().body(bookWithCategory);
     }
 
@@ -63,5 +73,11 @@ public class BookController {
     public ResponseEntity<String> changeBooks(@PathVariable("book") Book book){
         bookService.changeBookInformation(book);
         return ResponseEntity.ok("Книга успешно изменена");
+    }
+
+    @PostMapping("/batch")
+    public ResponseEntity<List<BookDTO>> getBooksByIds(@RequestBody List<UUID> bookIds) {
+        List<BookDTO> books = bookService.getBooksByIds(bookIds);
+        return ResponseEntity.ok(books);
     }
 }

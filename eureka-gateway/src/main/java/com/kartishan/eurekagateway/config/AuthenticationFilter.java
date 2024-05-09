@@ -29,22 +29,15 @@ public class AuthenticationFilter implements GatewayFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
 
-        if (routerValidator.isSecured.test(request)) {
-            if (this.isAuthMissing(request)) {
-                return this.onError(exchange, HttpStatus.UNAUTHORIZED);
-            }
-
+        if (!this.isAuthMissing(request)) {
             final String token = this.getAuthHeader(request);
 
-            if (jwtUtil.isInvalid(token)) {
-                return this.onError(exchange, HttpStatus.FORBIDDEN);
-            }
+            if (!jwtUtil.isInvalid(token)) {
+                Claims claims = jwtUtil.getAllClaimsFromToken(token);
+                String userId = claims.get("userId", String.class);
 
-            // Если вы хотите добавить информацию о пользователе в заголовки запроса
-            Claims claims = jwtUtil.getAllClaimsFromToken(token);
-            request = exchange.getRequest().mutate()
-                    .header("username", claims.getSubject()) // Или любой другой claim
-                    .build();
+                request = exchange.getRequest().mutate().header("username", claims.getSubject()).header("userId", userId).build();
+            }
         }
 
         return chain.filter(exchange.mutate().request(request).build());

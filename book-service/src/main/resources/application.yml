@@ -17,6 +17,11 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
 server:
   port: 0

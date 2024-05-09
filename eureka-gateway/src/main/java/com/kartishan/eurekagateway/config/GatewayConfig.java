@@ -20,6 +20,9 @@ public class GatewayConfig {
                 .route("book-service", r -> r.path("/api/book/**")
                         .filters(f -> f.filter(authenticationFilter))
                         .uri("lb://book-service"))
+                .route("view-history-service", r -> r.path("/api/history/**")
+                        .filters(f -> f.filter(authenticationFilter))
+                        .uri("lb://view-history-service"))
                 .build();
     }
 }

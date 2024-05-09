@@ -20,6 +20,10 @@ spring:
           predicates:
             - Path=/api/books/**
             - Method=GET
+        - id: view-history-service
+          uri: lb://view-history-service
+          predicates:
+            - Path=/api/history/**
 
 server:
   port: 8765

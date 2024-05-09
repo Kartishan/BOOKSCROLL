@@ -41,6 +41,7 @@ public class JwtService {
             Map<String, Object> extraClaims,
             UserDetails userDetails
     ) {
+        System.out.println("Generating token with claims: " + extraClaims);
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 

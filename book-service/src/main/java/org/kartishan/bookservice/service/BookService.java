@@ -1,11 +1,15 @@
 package org.kartishan.bookservice.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kartishan.bookservice.exceptions.BookNotFoundException;
 import org.kartishan.bookservice.model.Book;
 import org.kartishan.bookservice.model.Category;
 import org.kartishan.bookservice.model.dto.BookDTO;
+import org.kartishan.bookservice.model.dto.ViewHistoryMessage;
+import org.kartishan.bookservice.rabbitMQ.RabbitMQProducer;
 import org.kartishan.bookservice.repository.BookRepository;
 import org.kartishan.bookservice.repository.BookViewRepository;
 import org.kartishan.bookservice.repository.CategoryRepository;
@@ -16,10 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -27,16 +28,28 @@ import java.util.stream.Collectors;
 @Service
 public class BookService {
     private final BookRepository bookRepository;
-    private final BookViewRepository bookViewRepository;
     private final CategoryRepository categoryRepository;
+    private final RabbitMQProducer rabbitMQProducer;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public Book getBookById(UUID id) {
         return bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("Book with id " + id + " not found"));
     }
 
-    public BookDTO getBookByIdWithCategory(UUID id) {
+    public BookDTO getBookByIdWithCategory(UUID id, UUID userId) {
         Book book = getBookById(id);
+        processBookView(userId, book.getId());
         return convertToDto(book);
+    }
+    public void processBookView(UUID userId, UUID bookId) {
+        ViewHistoryMessage message = new ViewHistoryMessage(userId, bookId, new Date());
+
+        try {
+            String messageAsString = objectMapper.writeValueAsString(message);
+            rabbitMQProducer.sendToQueue("myQueue", messageAsString);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     public BookDTO convertToDto(Book book) {
@@ -122,5 +135,10 @@ public class BookService {
             log.error("Error changing book: " + e);
         }
 
+    }
+
+    public List<BookDTO> getBooksByIds(List<UUID> bookIds) {
+        List<Book> books = bookRepository.findAllById(bookIds);
+        return books.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 }
