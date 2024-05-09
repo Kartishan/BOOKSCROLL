@@ -11,7 +11,6 @@ import org.kartishan.bookservice.model.dto.BookDTO;
 import org.kartishan.bookservice.model.dto.ViewHistoryMessage;
 import org.kartishan.bookservice.rabbitMQ.RabbitMQProducer;
 import org.kartishan.bookservice.repository.BookRepository;
-import org.kartishan.bookservice.repository.BookViewRepository;
 import org.kartishan.bookservice.repository.CategoryRepository;
 import org.kartishan.bookservice.request.BookRequest;
 import org.springframework.data.domain.Page;
@@ -41,6 +40,7 @@ public class BookService {
         processBookView(userId, book.getId());
         return convertToDto(book);
     }
+
     public void processBookView(UUID userId, UUID bookId) {
         ViewHistoryMessage message = new ViewHistoryMessage(userId, bookId, new Date());
 
@@ -110,12 +110,11 @@ public class BookService {
 
             Set<Category> categories = new HashSet<>();
             for (String categoryName : bookRequest.getCategories()) {
-                Category category = categoryRepository.findByName(categoryName)
-                        .orElseGet(() -> {
-                            Category newCategory = new Category();
-                            newCategory.setName(categoryName);
-                            return categoryRepository.save(newCategory);
-                        });
+                Category category = categoryRepository.findByName(categoryName).orElseGet(() -> {
+                    Category newCategory = new Category();
+                    newCategory.setName(categoryName);
+                    return categoryRepository.save(newCategory);
+                });
                 categories.add(category);
             }
             book.setCategories(categories);
@@ -125,13 +124,13 @@ public class BookService {
         }
     }
 
-    public void changeBookInformation(Book book){
-        try{
+    public void changeBookInformation(Book book) {
+        try {
             UUID id = book.getId();
             Optional<Book> newBook = bookRepository.findById(id);
             newBook = Optional.of(book);
             bookRepository.save(newBook.get());
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("Error changing book: " + e);
         }
 
