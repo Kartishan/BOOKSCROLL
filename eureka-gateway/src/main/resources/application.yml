@@ -24,6 +24,10 @@ spring:
           uri: lb://view-history-service
           predicates:
             - Path=/api/history/**
+        - id: rating-service
+          uri: lb://rating-service
+          predicates:
+            - Path=/api/rating/**
 
 server:
   port: 8765

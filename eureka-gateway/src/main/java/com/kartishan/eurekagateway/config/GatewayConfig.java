@@ -23,6 +23,9 @@ public class GatewayConfig {
                 .route("view-history-service", r -> r.path("/api/history/**")
                         .filters(f -> f.filter(authenticationFilter))
                         .uri("lb://view-history-service"))
+                .route("rating-service", r -> r.path("/api/rating/**")
+                        .filters(f -> f.filter(authenticationFilter))
+                        .uri("lb://rating-service"))
                 .build();
     }
 }
