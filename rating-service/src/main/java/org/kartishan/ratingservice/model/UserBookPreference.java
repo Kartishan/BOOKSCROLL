@@ -1,28 +1,28 @@
-package org.kartishan.bookservice.model;
+package org.kartishan.ratingservice.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import java.util.UUID;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "book_view")
 @Entity
-public class BookView {
+@Table(name = "user_book_preference")
+public class UserBookPreference {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @OneToOne
-    @JoinColumn(name = "book_id")
-    @NonNull
-    private Book book;
+    private UUID userId;
 
-    @NonNull
-    private Long viewCount;
+    private UUID bookId;
+
+    private int rating;
 }
