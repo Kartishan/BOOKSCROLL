@@ -30,7 +30,6 @@ public class UserBookViewHistoryController {
                 System.out.println("Invalid UUID string: " + userIdString);
             }
         }
-        System.out.println("userId: " + userId);
         List<BookViewHistoryDTO> history = userBookViewHistoryService.getUserHistory(userId);
         return ResponseEntity.ok(history);
     }
