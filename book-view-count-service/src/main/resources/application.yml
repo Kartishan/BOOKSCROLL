@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: book-view-count-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/book-view-count
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+server:
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+
+logging:
+  pattern:
+    console: '%c{1.} [%-5level] %d{HH:mm:ss.SSS} - %msg%n'
