@@ -26,6 +26,9 @@ public class GatewayConfig {
                 .route("rating-service", r -> r.path("/api/rating/**")
                         .filters(f -> f.filter(authenticationFilter))
                         .uri("lb://rating-service"))
+                .route("book-file-service", r -> r.path("/api/file/**")
+                        .filters(f -> f.filter(authenticationFilter))
+                        .uri("lb://book-file-service"))
                 .build();
     }
 }
