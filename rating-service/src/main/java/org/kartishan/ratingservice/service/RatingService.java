@@ -49,4 +49,12 @@ public class RatingService {
             }
         });
     }
+
+    public List<UserBookPreference> findPreferencesByUser(UUID userId){
+        return userBookPreferenceRepository.findByUserId(userId);
+    }
+
+    public List<UserBookPreference> findAllPreferences() {
+        return userBookPreferenceRepository.findAll();
+    }
 }

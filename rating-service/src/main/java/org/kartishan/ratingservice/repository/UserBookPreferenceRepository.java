@@ -12,4 +12,6 @@ public interface UserBookPreferenceRepository extends JpaRepository<UserBookPref
     List<UserBookPreference> findByBookId(UUID bookId);
 
     Optional<UserBookPreference> findByUserIdAndBookId(UUID userId, UUID bookId);
+
+    List<UserBookPreference> findByUserId(UUID userId);
 }

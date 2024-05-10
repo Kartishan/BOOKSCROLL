@@ -8,6 +8,7 @@ import org.kartishan.bookservice.exceptions.BookNotFoundException;
 import org.kartishan.bookservice.model.Book;
 import org.kartishan.bookservice.model.Category;
 import org.kartishan.bookservice.model.dto.BookDTO;
+import org.kartishan.bookservice.model.dto.CategoryDTO;
 import org.kartishan.bookservice.model.dto.ViewHistoryMessage;
 import org.kartishan.bookservice.rabbitMQ.RabbitMQProducer;
 import org.kartishan.bookservice.repository.BookRepository;
@@ -76,6 +77,15 @@ public class BookService {
         }
     }
 
+    public List<BookDTO> getAllBooks() {
+        List<Book> books = bookRepository.findAll();
+        return books.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+
+
     public Page<Book> getBooksByPartialName(String partialName, Integer page, Integer pageSize) {
         try {
             Pageable pageable = PageRequest.of(page, pageSize);
@@ -143,5 +153,14 @@ public class BookService {
     public List<BookDTO> getBooksByIds(List<UUID> bookIds) {
         List<Book> books = bookRepository.findAllById(bookIds);
         return books.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    public Set<CategoryDTO> findCategoriesByBookId(UUID bookId) {
+        return categoryRepository.findCategoriesByBookId(bookId).stream()
+                .map(category -> CategoryDTO.builder()
+                        .id(category.getId())
+                        .name(category.getName())
+                        .build())
+                .collect(Collectors.toSet());
     }
 }

@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.kartishan.bookservice.model.Book;
 import org.kartishan.bookservice.model.dto.BookDTO;
+import org.kartishan.bookservice.model.dto.CategoryDTO;
 import org.kartishan.bookservice.request.BookRequest;
 import org.kartishan.bookservice.service.BookService;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -36,6 +38,13 @@ public class BookController {
         return ResponseEntity.ok().body(bookWithCategory);
     }
 
+    //TODO Надо в отдельный сервис перенести все что связанно с категориями
+    @GetMapping("/{bookId}/categories")
+    public ResponseEntity<Set<CategoryDTO>> getBookCategories(@PathVariable UUID bookId) {
+        Set<CategoryDTO> categories = bookService.findCategoriesByBookId(bookId);
+        return ResponseEntity.ok(categories);
+    }
+
     @GetMapping("/all")
     public ResponseEntity<Page<BookDTO>> getBooks(
             @RequestParam(defaultValue = "0") int page,
@@ -43,6 +52,13 @@ public class BookController {
     ) {
         Page<BookDTO> bookPage = bookService.getAllBooks(page, size);
         return ResponseEntity.ok(bookPage);
+    }
+
+
+    @GetMapping("/list/all")
+    public ResponseEntity<List<BookDTO>> getBooks() {
+        List<BookDTO> books = bookService.getAllBooks();
+        return ResponseEntity.ok(books);
     }
 
     @GetMapping("/category/{category}")
