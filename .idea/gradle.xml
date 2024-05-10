@@ -47,6 +47,11 @@
                   <project path="$PROJECT_DIR$/rating-service" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/recommendation-service" name="recommendation-service">
+                <projects>
+                  <project path="$PROJECT_DIR$/recommendation-service" />
+                </projects>
+              </build>
               <build path="$PROJECT_DIR$/view-history" name="view-history">
                 <projects>
                   <project path="$PROJECT_DIR$/view-history" />
@@ -68,6 +73,7 @@
             <option value="$PROJECT_DIR$/eureka-gateway" />
             <option value="$PROJECT_DIR$/eureka-server" />
             <option value="$PROJECT_DIR$/rating-service" />
+            <option value="$PROJECT_DIR$/recommendation-service" />
             <option value="$PROJECT_DIR$/view-history" />
           </set>
         </option>

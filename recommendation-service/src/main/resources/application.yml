@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: recommendation-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+server:
+  port: 0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+
+logging:
+  pattern:
+    console: '%c{1.} [%-5level] %d{HH:mm:ss.SSS} - %msg%n'

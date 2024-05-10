@@ -16,6 +16,7 @@
         <option value="$PROJECT_DIR$/view-history/pom.xml" />
         <option value="$PROJECT_DIR$/rating-service/pom.xml" />
         <option value="$PROJECT_DIR$/book-file-service/pom.xml" />
+        <option value="$PROJECT_DIR$/recommendation-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
