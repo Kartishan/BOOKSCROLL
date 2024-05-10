@@ -86,6 +86,14 @@
           </set>
         </option>
       </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/scroll-view-history-service/scroll-user-view-history-service" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/scroll-view-history-service/scroll-user-view-history-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
     </option>
   </component>
 </project>
