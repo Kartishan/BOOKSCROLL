@@ -37,7 +37,9 @@ public class BookService {
 
     public BookDTO getBookByIdWithCategory(UUID id, UUID userId) {
         Book book = getBookById(id);
-        processBookView(userId, book.getId());
+        if (userId != null){
+            processBookView(userId, book.getId());
+        }
         return convertToDto(book);
     }
 
@@ -47,6 +49,8 @@ public class BookService {
         try {
             String messageAsString = objectMapper.writeValueAsString(message);
             rabbitMQProducer.sendToQueue("myQueue", messageAsString);
+            String bookIdAsString = bookId.toString();
+            rabbitMQProducer.sendToQueue("bookViewIncrementQueue", bookIdAsString);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

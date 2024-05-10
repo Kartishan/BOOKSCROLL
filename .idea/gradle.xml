@@ -17,6 +17,11 @@
                   <project path="$PROJECT_DIR$/book-service" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/book-view-count-service" name="book-view-count-service">
+                <projects>
+                  <project path="$PROJECT_DIR$/book-view-count-service" />
+                </projects>
+              </build>
               <build path="$PROJECT_DIR$/eureka-client" name="eureka-client">
                 <projects>
                   <project path="$PROJECT_DIR$/eureka-client" />
@@ -52,6 +57,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/auth-service" />
             <option value="$PROJECT_DIR$/book-service" />
+            <option value="$PROJECT_DIR$/book-view-count-service" />
             <option value="$PROJECT_DIR$/eureka-client" />
             <option value="$PROJECT_DIR$/eureka-gateway" />
             <option value="$PROJECT_DIR$/eureka-server" />

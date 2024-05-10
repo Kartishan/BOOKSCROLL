@@ -6,3 +6,4 @@ includeBuild 'auth-service'
 includeBuild('book-service')
 includeBuild('view-history')
 includeBuild('rating-service')
+includeBuild('book-view-count-service')

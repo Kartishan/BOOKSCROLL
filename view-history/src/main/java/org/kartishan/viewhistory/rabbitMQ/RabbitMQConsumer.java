@@ -2,6 +2,7 @@ package org.kartishan.viewhistory.rabbitMQ;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import org.kartishan.viewhistory.config.RabbitConfig;
 import org.kartishan.viewhistory.model.dto.ViewHistoryMessage;
 import org.kartishan.viewhistory.service.UserBookViewHistoryService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -13,7 +14,7 @@ public class RabbitMQConsumer {
     private final UserBookViewHistoryService userBookViewHistoryService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @RabbitListener(queues = "myQueue")
+    @RabbitListener(queues = RabbitConfig.MY_QUEUE)
     public void receiveMessage(String message) {
         try {
             ViewHistoryMessage viewHistoryMessage = objectMapper.readValue(message, ViewHistoryMessage.class);
