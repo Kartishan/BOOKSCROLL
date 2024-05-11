@@ -2,10 +2,12 @@ package com.karishan.authservice.controller;
 
 
 import com.karishan.authservice.model.User;
+import com.karishan.authservice.model.dto.UserDTO;
 import com.karishan.authservice.request.AuthenticationRequest;
 import com.karishan.authservice.request.RegisterRequest;
 import com.karishan.authservice.response.AuthenticationResponse;
 import com.karishan.authservice.service.jwt.AuthenticationService;
+import com.karishan.authservice.service.jwt.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,13 +16,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.UUID;
 
-@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService service;
+    private final UserService userService;
 
     @PostMapping("/signup")
     public ResponseEntity<AuthenticationResponse> register(
@@ -67,5 +70,9 @@ public class AuthenticationController {
             return ResponseEntity.notFound().build();
         }
     }
-
+//    @GetMapping("/get-user/{id}")
+//    public ResponseEntity<UserDTO> getUserById(@PathVariable UUID id) {
+//        UserDTO userDto = userService.getUserDtoById(id);
+//        return ResponseEntity.ok(userDto);
+//    }
 }

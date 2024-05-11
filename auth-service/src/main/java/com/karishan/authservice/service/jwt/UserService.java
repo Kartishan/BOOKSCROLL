@@ -1,6 +1,7 @@
 package com.karishan.authservice.service.jwt;
 
 import com.karishan.authservice.model.User;
+import com.karishan.authservice.model.dto.UserDTO;
 import com.karishan.authservice.repository.UserRepository;
 import com.karishan.authservice.request.ChangePasswordRequest;
 import lombok.RequiredArgsConstructor;
@@ -38,4 +39,20 @@ public class UserService {
         userRepository.save(user);
     }
 
+
+
+    public UserDTO getUserDtoById(UUID id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("User not found"));
+        return toUserDto(user);
+    }
+
+    // Вспомогательный метод для преобразования User в UserDTO
+    private UserDTO toUserDto(User user) {
+        return UserDTO.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .build();
+    }
 }
