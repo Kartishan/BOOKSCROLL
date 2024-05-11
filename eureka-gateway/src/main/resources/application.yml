@@ -14,12 +14,10 @@ spring:
           uri: lb://auth-service
           predicates:
             - Path=/api/auth/**
-            - Method=POST
         - id: book-service
           uri: lb://book-service
           predicates:
             - Path=/api/books/**
-            - Method=GET
         - id: view-history-service
           uri: lb://view-history-service
           predicates:
@@ -36,6 +34,10 @@ spring:
           uri: lb://recommendation-service
           predicates:
             - Path=/api/recommendation/**
+        - id: scroll-service
+          uri: lb://scroll-service
+          predicates:
+            - Path=/api/scroll/**
 
 server:
   port: 8765
