@@ -5,7 +5,9 @@ import org.kartishan.scrolluserlikeservice.model.UserScrollLike;
 import org.kartishan.scrolluserlikeservice.reposirory.UserScrollLikeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +26,14 @@ public class UserScrollLikeService {
         userScrollLike.setLiked(!userScrollLike.isLiked());
         userScrollLikeRepository.save(userScrollLike);
     }
+
     public boolean userLike(UUID scrollId, UUID userId){
         return userScrollLikeRepository.findByUserIdAndScrollId(userId, scrollId).get().isLiked();
+    }
+
+    public List<UUID> getLikedScrollIdsByUser(UUID userId) {
+        return userScrollLikeRepository.findAllByUserIdAndLikedIsTrue(userId).stream()
+                .map(UserScrollLike::getScrollId)
+                .collect(Collectors.toList());
     }
 }

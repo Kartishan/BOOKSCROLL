@@ -2,10 +2,12 @@ package org.kartishan.scrolluserlikeservice.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.kartishan.scrolluserlikeservice.feign.ScrollClient;
 import org.kartishan.scrolluserlikeservice.service.UserScrollLikeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -13,6 +15,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserScrollLikeController {
     private final UserScrollLikeService userScrollLikeService;
+    private final ScrollClient scrollClient;
     @GetMapping("/{scrollId}/like-status")
     public ResponseEntity<Boolean> userLike(@PathVariable UUID scrollId, HttpServletRequest request) {
         try {
@@ -33,5 +36,10 @@ public class UserScrollLikeController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Invalid user id");
         }
+    }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<UUID>> getLikedScrollsByUser(@PathVariable UUID userId) {
+        List<UUID> likedScrollIds = userScrollLikeService.getLikedScrollIdsByUser(userId);
+        return ResponseEntity.ok(likedScrollIds);
     }
 }
