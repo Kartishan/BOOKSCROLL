@@ -2,6 +2,9 @@ package org.kartishan.scrollservice.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.kartishan.scrollservice.model.Scroll;
+import org.kartishan.scrollservice.model.dto.ScrollDTO;
+import org.kartishan.scrollservice.repository.ScrollRepository;
 import org.kartishan.scrollservice.request.ScrollRequest;
 import org.kartishan.scrollservice.service.ScrollService;
 import org.springframework.http.HttpStatus;
@@ -9,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
+import java.util.stream.Collectors;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -16,6 +22,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ScrollController {
     private final ScrollService scrollService;
+    private final ScrollRepository scrollRepository;
+
     @PostMapping("/create")
     public ResponseEntity<?> createScroll(@RequestBody ScrollRequest scrollRequest, HttpServletRequest request){
         try {
@@ -35,5 +43,22 @@ public class ScrollController {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Scroll not found");
         }
+    }
+
+    @GetMapping("/full/{id}")
+    public ResponseEntity<ScrollDTO> getScrollDetails(@PathVariable UUID id) {
+        ScrollDTO scrollDTO = scrollService.getScrollDetails(id);
+        return ResponseEntity.ok(scrollDTO);
+    }
+
+    @GetMapping("/random")
+    public ResponseEntity<List<UUID>> getRandomScrollIds(@RequestParam int count) {
+        List<Scroll> allScrolls = scrollRepository.findAll();
+        Collections.shuffle(allScrolls);
+        List<UUID> randomScrollIds = allScrolls.stream()
+                .map(Scroll::getId)
+                .limit(count)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(randomScrollIds);
     }
 }
