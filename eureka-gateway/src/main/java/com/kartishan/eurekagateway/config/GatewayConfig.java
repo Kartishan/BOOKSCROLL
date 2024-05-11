@@ -29,6 +29,9 @@ public class GatewayConfig {
                 .route("book-file-service", r -> r.path("/api/file/**")
                         .filters(f -> f.filter(authenticationFilter))
                         .uri("lb://book-file-service"))
+                .route("scroll-service", r -> r.path("/api/scroll/**")
+                        .filters(f -> f.filter(authenticationFilter))
+                        .uri("lb://scroll-service"))
                 .build();
     }
 }
