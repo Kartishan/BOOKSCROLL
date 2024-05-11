@@ -46,8 +46,18 @@ public class ScrollController {
     }
 
     @GetMapping("/full/{id}")
-    public ResponseEntity<ScrollDTO> getScrollDetails(@PathVariable UUID id) {
-        ScrollDTO scrollDTO = scrollService.getScrollDetails(id);
+    public ResponseEntity<ScrollDTO> getScrollDetails(@PathVariable UUID id,  HttpServletRequest request) {
+        String userIdString = request.getHeader("userId");
+        UUID userId = null;
+        if (userIdString != null && !userIdString.isEmpty()) {
+            try {
+                userId = UUID.fromString(userIdString);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid UUID string: " + userIdString);
+            }
+        }
+
+        ScrollDTO scrollDTO = scrollService.getScrollDetails(id, userId);
         return ResponseEntity.ok(scrollDTO);
     }
 
