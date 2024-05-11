@@ -9,9 +9,7 @@ import java.util.UUID;
 
 public interface UserScrollViewHistoryRepository extends JpaRepository<UserScrollViewHistory, UUID> {
 
-    List<UserScrollViewHistory> findAllByScroll_Id(UUID scrollId);
+    List<UserScrollViewHistory> findAllByUserId(UUID userId);
 
-    List<UserScrollViewHistory> findAllByUser_Id(UUID userId);
-
-    Optional<UserScrollViewHistory> findByUserIdandScrollId(UUID userId, UUID bookId);
+    Optional<UserScrollViewHistory> findByUserIdAndScrollId(UUID userId, UUID scrollId);
 }

@@ -14,12 +14,12 @@ import java.util.UUID;
 public class UserScrollViewHistoryService {
     private final UserScrollViewHistoryRepository userScrollViewHistoryRepository;
 
-    public void saveUserScrollViewHistory(UUID userId, UUID bookId) {
-        UserScrollViewHistory userScrollViewHistory = userScrollViewHistoryRepository.findByUserIdandScrollId(userId, bookId)
+    public void saveUserScrollViewHistory(UUID userId, UUID scrollId) {
+        UserScrollViewHistory userScrollViewHistory = userScrollViewHistoryRepository.findByUserIdAndScrollId(userId, scrollId)
                 .orElseGet(() -> {
                     UserScrollViewHistory newUserScrollViewHistory = new UserScrollViewHistory();
                     newUserScrollViewHistory.setUserId(userId);
-                    newUserScrollViewHistory.setScrollId(bookId);
+                    newUserScrollViewHistory.setScrollId(scrollId);
                     return newUserScrollViewHistory;
                 });
         userScrollViewHistory.setViewTime(new Date());
@@ -27,6 +27,6 @@ public class UserScrollViewHistoryService {
     }
 
     public List<UserScrollViewHistory> getUserHistory(UUID userId) {
-        return userScrollViewHistoryRepository.findAllByUser_Id(userId);
+        return userScrollViewHistoryRepository.findAllByUserId(userId);
     }
 }
