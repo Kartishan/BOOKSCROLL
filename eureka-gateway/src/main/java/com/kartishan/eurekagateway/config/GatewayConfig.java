@@ -32,6 +32,12 @@ public class GatewayConfig {
                 .route("scroll-service", r -> r.path("/api/scroll/**")
                         .filters(f -> f.filter(authenticationFilter))
                         .uri("lb://scroll-service"))
+                .route("scroll-recommendation-service", r -> r.path("/api/user-scroll-recommendation/**")
+                        .filters(f -> f.filter(authenticationFilter))
+                        .uri("lb://scroll-recommendation-service"))
+                .route("scroll-user-like-service", r -> r.path("/api/user-scroll-like/**")
+                        .filters(f -> f.filter(authenticationFilter))
+                        .uri("lb://scroll-user-like-service"))
                 .build();
     }
 }
