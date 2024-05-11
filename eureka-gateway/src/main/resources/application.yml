@@ -54,6 +54,10 @@ spring:
           uri: lb://book-view-count-service
           predicates:
             - Path=/api/book-view-count/**
+        - id: book-image-service
+          uri: lb://book-image-service
+          predicates:
+            - Path=/api/image/**
 server:
   port: 8765
 
