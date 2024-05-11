@@ -50,6 +50,10 @@ spring:
           uri: lb://scroll-recommendation-service
           predicates:
             - Path=/api/user-scroll-recommendation/**
+        - id: book-view-count-service
+          uri: lb://book-view-count-service
+          predicates:
+            - Path=/api/book-view-count/**
 server:
   port: 8765
 
