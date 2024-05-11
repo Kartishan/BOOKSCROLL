@@ -38,7 +38,10 @@ spring:
           uri: lb://scroll-service
           predicates:
             - Path=/api/scroll/**
-
+        - id: scroll-user-view-history-service
+          uri: lb://scroll-user-view-history-service
+          predicates:
+            - Path=/api/user-scroll-view-history/**
 server:
   port: 8765
 
