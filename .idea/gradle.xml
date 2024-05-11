@@ -52,6 +52,16 @@
                   <project path="$PROJECT_DIR$/recommendation-service" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/scroll-user-like-service" name="scroll-user-like-service">
+                <projects>
+                  <project path="$PROJECT_DIR$/scroll-user-like-service" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/scroll-user-view-history-service" name="scroll-user-view-history-service">
+                <projects>
+                  <project path="$PROJECT_DIR$/scroll-user-view-history-service" />
+                </projects>
+              </build>
               <build path="$PROJECT_DIR$/view-history" name="view-history">
                 <projects>
                   <project path="$PROJECT_DIR$/view-history" />
@@ -74,6 +84,8 @@
             <option value="$PROJECT_DIR$/eureka-server" />
             <option value="$PROJECT_DIR$/rating-service" />
             <option value="$PROJECT_DIR$/recommendation-service" />
+            <option value="$PROJECT_DIR$/scroll-user-like-service" />
+            <option value="$PROJECT_DIR$/scroll-user-view-history-service" />
             <option value="$PROJECT_DIR$/view-history" />
           </set>
         </option>
