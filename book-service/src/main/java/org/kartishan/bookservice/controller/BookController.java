@@ -45,6 +45,14 @@ public class BookController {
         return ResponseEntity.ok(categories);
     }
 
+    @GetMapping("/top-rated")
+    public ResponseEntity<Page<BookDTO>> getTopRatedBooks(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        Page<BookDTO> books = bookService.getTopRatedBooks(page, pageSize);
+        return ResponseEntity.ok(books);
+    }
+
     @GetMapping("/all")
     public ResponseEntity<Page<BookDTO>> getBooks(
             @RequestParam(defaultValue = "0") int page,
