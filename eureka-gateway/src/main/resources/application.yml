@@ -62,6 +62,10 @@ spring:
           uri: lb://book-mark-service
           predicates:
             - Path=/api/book-mark/**
+        - id: book-hero-service
+          uri: lb://book-hero-service
+          predicates:
+            - Path=/api/heroes/**
 server:
   port: 8765
 
