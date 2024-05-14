@@ -20,8 +20,8 @@ import java.util.UUID;
 public class BookMarkController {
     private final BookMarkService bookMarkService;
 
-    @PostMapping("/{bookId}")
-    public ResponseEntity<Boolean > createBookmark(@RequestBody BookmarkDTO newBookmarkDTO, @PathVariable UUID bookId, HttpServletRequest request) {
+    @PostMapping("/add/{bookId}")
+    public ResponseEntity<?> createBookmark(@RequestBody BookmarkDTO newBookmarkDTO, @PathVariable UUID bookId, HttpServletRequest request) {
         String userIdString = request.getHeader("userId");
         UUID userId = null;
         if (userIdString != null && !userIdString.isEmpty()) {
@@ -35,7 +35,7 @@ public class BookMarkController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User must be authenticated");
         }
         bookMarkService.addOrUpdateBookmark(userId, bookId, newBookmarkDTO);
-        return new ResponseEntity<>( HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Заметка была добавлена.");
     }
 
     @GetMapping("/{bookId}")
