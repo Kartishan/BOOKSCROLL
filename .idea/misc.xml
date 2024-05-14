@@ -24,6 +24,7 @@
         <option value="$PROJECT_DIR$/scroll-recommendation-service/pom.xml" />
         <option value="$PROJECT_DIR$/book-image-service/pom.xml" />
         <option value="$PROJECT_DIR$/book-mark-service/pom.xml" />
+        <option value="$PROJECT_DIR$/book-hero-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
