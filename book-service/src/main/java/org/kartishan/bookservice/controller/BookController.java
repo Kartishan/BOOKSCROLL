@@ -104,4 +104,9 @@ public class BookController {
         List<BookDTO> books = bookService.getBooksByIds(bookIds);
         return ResponseEntity.ok(books);
     }
+
+    @GetMapping("/categories")
+    public List<String> getAllCategoryNames() {
+        return bookService.getAllCategoryNames();
+    }
 }

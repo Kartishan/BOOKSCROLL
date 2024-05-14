@@ -163,4 +163,13 @@ public class BookService {
                         .build())
                 .collect(Collectors.toSet());
     }
+
+    public List<String> getAllCategoryNames() {
+        List<Category> categories = categoryRepository.findAll();
+        List<String> categoryNames = new ArrayList<>();
+        for (Category category : categories) {
+            categoryNames.add(category.getName());
+        }
+        return categoryNames;
+    }
 }

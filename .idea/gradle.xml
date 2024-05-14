@@ -17,6 +17,16 @@
                   <project path="$PROJECT_DIR$/book-file-service" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/book-image-service" name="book-image-service">
+                <projects>
+                  <project path="$PROJECT_DIR$/book-image-service" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/book-mark-service" name="book-mark-service">
+                <projects>
+                  <project path="$PROJECT_DIR$/book-mark-service" />
+                </projects>
+              </build>
               <build path="$PROJECT_DIR$/book-service" name="book-service">
                 <projects>
                   <project path="$PROJECT_DIR$/book-service" />
@@ -82,6 +92,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/auth-service" />
             <option value="$PROJECT_DIR$/book-file-service" />
+            <option value="$PROJECT_DIR$/book-image-service" />
+            <option value="$PROJECT_DIR$/book-mark-service" />
             <option value="$PROJECT_DIR$/book-service" />
             <option value="$PROJECT_DIR$/book-view-count-service" />
             <option value="$PROJECT_DIR$/eureka-client" />
