@@ -55,4 +55,11 @@ public class UserService {
                 .email(user.getEmail())
                 .build();
     }
+
+    public String getUsernameById(UUID id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("User not found"));
+        return user.getUsername();
+    }
+
 }

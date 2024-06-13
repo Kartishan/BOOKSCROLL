@@ -30,4 +30,9 @@ public class UserScrollViewHistoryController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(scrollIds);
     }
+    @GetMapping("/users")
+    public ResponseEntity<List<UUID>> getAllUsers() {
+        List<UUID> userIds = userScrollViewHistoryService.getAllUsers();
+        return ResponseEntity.ok(userIds);
+    }
 }

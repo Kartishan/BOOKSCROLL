@@ -66,6 +66,18 @@ spring:
           uri: lb://book-hero-service
           predicates:
             - Path=/api/heroes/**
+        - id: book-chapter-service
+          uri: lb://book-chapter-service
+          predicates:
+            - Path=/api/book-chapters/**
+        - id: book-comment-service
+          uri: lb://book-comment-service
+          predicates:
+              - Path=/api/comments/**
+        - id: audio-book-service
+          uri: lb://audio-book-service
+          predicates:
+            - Path=/api/audio/**
 server:
   port: 8765
 

@@ -1,8 +1,8 @@
 spring:
   application:
-    name: scroll-user-view-history-service
+    name: book-chapter-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/scroll-user-view-history-service
+    url: jdbc:postgresql://localhost:5432/book-chapter
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver

@@ -23,8 +23,4 @@ public class ScrollRecommendationController {
         List<UUID> recommendations = scrollRecommendationService.getPersonalizedScrolls(userId, limit);
         return ResponseEntity.ok(recommendations);
     }
-    @GetMapping("/test")
-    public ResponseEntity<String> test(){
-        return ResponseEntity.ok("Hello");
-    }
 }

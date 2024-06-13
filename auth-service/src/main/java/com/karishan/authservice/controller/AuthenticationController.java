@@ -2,7 +2,6 @@ package com.karishan.authservice.controller;
 
 
 import com.karishan.authservice.model.User;
-import com.karishan.authservice.model.dto.UserDTO;
 import com.karishan.authservice.request.AuthenticationRequest;
 import com.karishan.authservice.request.RegisterRequest;
 import com.karishan.authservice.response.AuthenticationResponse;
@@ -16,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -35,6 +33,7 @@ public class AuthenticationController {
         refreshTokenCookie.setPath("/");
 
         response.addCookie(refreshTokenCookie);
+
 
         return ResponseEntity.ok(new AuthenticationResponse(authResponse.getAccessToken(), null));
     }

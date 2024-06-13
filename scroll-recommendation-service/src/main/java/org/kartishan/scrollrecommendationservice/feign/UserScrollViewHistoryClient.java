@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface UserScrollViewHistoryClient {
     @GetMapping("/api/user-scroll-view-history/user/{userId}")
     List<UUID> getLikedScrollsByUser(@PathVariable("userId") UUID userId);
+    @GetMapping("/api/user-scroll-view-history/users")
+    List<UUID> getAllUsers();
 }

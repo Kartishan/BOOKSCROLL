@@ -22,4 +22,11 @@ public class UserController {
         UserDTO userDto = userService.getUserDtoById(id);
         return ResponseEntity.ok(userDto);
     }
+
+    @GetMapping("/username/{userId}")
+    public ResponseEntity<String> getUsernameById(@PathVariable UUID userId) {
+        String username = userService.getUsernameById(userId);
+        return ResponseEntity.ok(username);
+    }
+
 }

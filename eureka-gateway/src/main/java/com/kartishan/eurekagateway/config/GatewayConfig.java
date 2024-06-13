@@ -41,6 +41,12 @@ public class GatewayConfig {
                 .route("book-mark-service", r -> r.path("/api/book-mark/**")
                         .filters(f -> f.filter(authenticationFilter))
                         .uri("lb://book-mark-service"))
+                .route("book-comment-service", r -> r.path("/api/comments/**")
+                        .filters(f -> f.filter(authenticationFilter))
+                        .uri("lb://book-comment-service"))
+                .route("audio-book-service", r -> r.path("/api/audio/**")
+                        .filters(f -> f.filter(authenticationFilter))
+                        .uri("lb://audio-book-service"))
                 .build();
     }
 }

@@ -21,10 +21,19 @@ public class UserScrollLikeController {
         try {
             String userIdString = request.getHeader("userId");
             UUID userId =UUID.fromString(userIdString);
-            return ResponseEntity.ok(userScrollLikeService.userLike(scrollId, userId));
+            System.out.println("userId: " + userId);
+            System.out.println("scrollId: " + scrollId);
+            Boolean like = userScrollLikeService.userLike(scrollId, userId);
+            System.out.println("like: " + like);
+            return ResponseEntity.ok(like);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(false);
         }
+    }
+    @GetMapping("/users")
+    public ResponseEntity<List<UUID>> getAllUsers() {
+        List<UUID> userIds = userScrollLikeService.getAllUsers();
+        return ResponseEntity.ok(userIds);
     }
     @PutMapping("/like/{scrollId}")
     public ResponseEntity<?> likeScroll(@PathVariable UUID scrollId, HttpServletRequest request) {

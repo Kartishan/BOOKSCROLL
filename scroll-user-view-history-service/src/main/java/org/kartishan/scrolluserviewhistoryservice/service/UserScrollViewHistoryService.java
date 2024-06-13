@@ -29,4 +29,7 @@ public class UserScrollViewHistoryService {
     public List<UserScrollViewHistory> getUserHistory(UUID userId) {
         return userScrollViewHistoryRepository.findAllByUserId(userId);
     }
+    public List<UUID> getAllUsers() {
+        return userScrollViewHistoryRepository.findAllUsers();
+    }
 }

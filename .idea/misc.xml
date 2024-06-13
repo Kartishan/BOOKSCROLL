@@ -25,10 +25,15 @@
         <option value="$PROJECT_DIR$/book-image-service/pom.xml" />
         <option value="$PROJECT_DIR$/book-mark-service/pom.xml" />
         <option value="$PROJECT_DIR$/book-hero-service/pom.xml" />
+        <option value="$PROJECT_DIR$/book-chapter-service/pom.xml" />
+        <option value="$PROJECT_DIR$/book-comment-service/pom.xml" />
+        <option value="$PROJECT_DIR$/audio-service/pom.xml" />
+        <option value="$PROJECT_DIR$/audio-book-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/audio-service/pom.xml" />
         <option value="$PROJECT_DIR$/demo/pom.xml" />
       </set>
     </option>

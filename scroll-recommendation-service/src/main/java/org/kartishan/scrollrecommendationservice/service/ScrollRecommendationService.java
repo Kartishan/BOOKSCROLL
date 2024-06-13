@@ -21,15 +21,55 @@ public class ScrollRecommendationService {
     public List<UUID> getPersonalizedScrolls(UUID userId, int limit) {
         List<UUID> likedScrollIds = userScrollLikeClient.getLikedScrollsByUser(userId);
         List<UUID> viewedScrollIds = userScrollViewHistoryClient.getLikedScrollsByUser(userId);
-        System.out.println("likedScrollIds: " + likedScrollIds);
-        System.out.println("viewedScrollIds: " + viewedScrollIds);
-        Map<UUID, Integer> scrollScores = new HashMap<>();
 
-        likedScrollIds.forEach(scrollId -> scrollScores.merge(scrollId, 2, Integer::sum));
-        viewedScrollIds.forEach(scrollId -> scrollScores.merge(scrollId, 1, Integer::sum));
+        Set<UUID> allUserIds = new HashSet<>(userScrollLikeClient.getAllUsers());
+        allUserIds.addAll(userScrollViewHistoryClient.getAllUsers());
 
-        List<UUID> recommendedScrollIds = scrollScores.entrySet().stream()
-                .sorted(Map.Entry.<UUID, Integer>comparingByValue().reversed())
+        Map<UUID, Double> userSimilarities = new HashMap<>();
+        for (UUID otherUserId : allUserIds) {
+            if (!otherUserId.equals(userId)) {
+                List<UUID> otherLikedScrollIds = userScrollLikeClient.getLikedScrollsByUser(otherUserId);
+                List<UUID> otherViewedScrollIds = userScrollViewHistoryClient.getLikedScrollsByUser(otherUserId);
+
+                Set<UUID> commonLikedScrolls = new HashSet<>(likedScrollIds);
+                commonLikedScrolls.retainAll(otherLikedScrollIds);
+
+                Set<UUID> commonViewedScrolls = new HashSet<>(viewedScrollIds);
+                commonViewedScrolls.retainAll(otherViewedScrollIds);
+
+                double similarity = (2.0 * commonLikedScrolls.size() + commonViewedScrolls.size()) /
+                        (Math.sqrt(likedScrollIds.size() * otherLikedScrollIds.size()) + Math.sqrt(viewedScrollIds.size() * otherViewedScrollIds.size()));
+
+                userSimilarities.put(otherUserId, similarity);
+            }
+        }
+
+        Map<UUID, Double> recommendedScrollScores = new HashMap<>();
+        userSimilarities.entrySet().stream()
+                .sorted(Map.Entry.<UUID, Double>comparingByValue().reversed())
+                .limit(limit)
+                .forEach(entry -> {
+                    UUID similarUserId = entry.getKey();
+                    double similarity = entry.getValue();
+
+                    List<UUID> similarUserLikedScrollIds = userScrollLikeClient.getLikedScrollsByUser(similarUserId);
+                    List<UUID> similarUserViewedScrollIds = userScrollViewHistoryClient.getLikedScrollsByUser(similarUserId);
+
+                    for (UUID scrollId : similarUserLikedScrollIds) {
+                        if (!likedScrollIds.contains(scrollId) && !viewedScrollIds.contains(scrollId)) {
+                            recommendedScrollScores.merge(scrollId, similarity * 2, Double::sum);
+                        }
+                    }
+
+                    for (UUID scrollId : similarUserViewedScrollIds) {
+                        if (!likedScrollIds.contains(scrollId) && !viewedScrollIds.contains(scrollId)) {
+                            recommendedScrollScores.merge(scrollId, similarity, Double::sum);
+                        }
+                    }
+                });
+
+        List<UUID> recommendedScrollIds = recommendedScrollScores.entrySet().stream()
+                .sorted(Map.Entry.<UUID, Double>comparingByValue().reversed())
                 .map(Map.Entry::getKey)
                 .limit(limit)
                 .collect(Collectors.toList());
@@ -40,7 +80,6 @@ public class ScrollRecommendationService {
             randomScrollIds.removeAll(recommendedScrollIds);
             recommendedScrollIds.addAll(randomScrollIds);
         }
-
 
         return recommendedScrollIds;
     }
